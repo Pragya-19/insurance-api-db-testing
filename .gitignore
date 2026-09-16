@@ -1,0 +1,24 @@
+# Node dependencies
+node_modules/
+
+# Environment / secret files
+.env
+.env.*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Newman temporary output
+newman/*.tmp
