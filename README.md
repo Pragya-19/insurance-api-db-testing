@@ -94,11 +94,10 @@ insurance-api-db-testing/
 │   ├── architecture.md
 │   ├── test-strategy.md
 │   └── screenshots/
-│       ├── postman-runner-23-tests-passed.png
+│       ├── postman-runner-23-passed.png
 │       ├── newman-23-assertions-passed.png
 │       ├── postman-create-policy-201-passed.png
 │       ├── postman-duplicate-policy-409-passed.png
-│       ├── database-validation.png
 │       └── github-actions-api-ci-passed.png
 │
 ├── newman/
