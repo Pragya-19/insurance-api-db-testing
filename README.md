@@ -562,7 +562,7 @@ GitHub
 
 The complete collection executes successfully with **23/23 assertions passing**.
 
-![Postman Runner](docs/screenshots/postman-runner-23-tests-passed.png)
+![Postman Runner](docs/screenshots/postman-runner-23-passed.png)
 
 ---
 
