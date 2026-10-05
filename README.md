@@ -574,13 +574,6 @@ Newman executes all six API requests with **23 assertions and zero failures**.
 
 ---
 
-## Database Validation
-
-MySQL validation demonstrates relational data checks and insurance business-rule validation.
-
-![Database Validation](docs/screenshots/database-validation.png)
-
----
 
 ## GitHub Actions CI
 
