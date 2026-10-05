@@ -1,48 +1,78 @@
-# Insurance API & Database Testing Portfolio
+# Insurance API & Database Testing
 
-A hands-on QA portfolio project demonstrating **REST API testing, Postman automation, Newman CLI execution, SQL database testing, data-integrity validation, and negative testing** in the Motor Insurance domain.
+[![Insurance API Tests](https://github.com/Pragya-19/insurance-api-db-testing/actions/workflows/api-tests.yml/badge.svg)](https://github.com/Pragya-19/insurance-api-db-testing/actions/workflows/api-tests.yml)
 
-The project contains two independent testing modules:
+Motor Insurance QA portfolio project demonstrating **REST API testing, Postman automation, Newman CLI execution, MySQL database testing, SQL validation, negative testing, data integrity checks, and GitHub Actions CI/CD**.
+
+The project contains two independent QA modules:
 
 - **API Testing:** CyberNotes Motor Insurance Demo API
-- **Database Testing:** Local MySQL Insurance Database
+- **Database Testing:** Local MySQL Motor Insurance database
 
-> **Architecture Note:** The CyberNotes API and local MySQL database are independent systems. This project does not claim API-to-database integration testing.
+> **Architecture Note:** The public API and local MySQL database are independent test systems. This project demonstrates API testing and database testing skills separately and does not claim API-to-database integration testing.
 
 ---
 
-## Project Objectives
+## Project Objective
 
-The objective of this project is to demonstrate practical QA skills across API and database testing, including:
+The objective of this project is to demonstrate practical QA engineering across API and relational-database testing.
+
+The project covers:
 
 - REST API testing
-- Positive and negative API scenarios
-- Authentication testing
-- Dynamic request chaining
+- authentication testing
+- dynamic request chaining
+- positive and negative testing
 - Postman JavaScript assertions
-- Environment-variable management
-- Newman command-line execution
-- Relational database testing
-- SQL validation queries
-- Database constraint testing
-- Referential-integrity validation
-- Business-rule validation
+- environment-variable management
+- Newman CLI execution
+- response validation
+- MySQL database testing
+- SQL joins and validation queries
+- primary and foreign key validation
+- database constraints
+- referential integrity testing
+- business-rule validation
+- GitHub Actions CI/CD
 
 ---
 
-## Technology Stack
+## Tech Stack
 
-| Area             | Technology                 |
-| ---------------- | -------------------------- |
-| API Testing      | Postman                    |
-| API Automation   | Postman JavaScript Scripts |
-| CLI Execution    | Newman                     |
-| API Type         | REST                       |
-| Database         | MySQL                      |
-| Database Client  | MySQL Workbench            |
-| Database Testing | SQL                        |
-| Version Control  | Git & GitHub               |
-| CI               | GitHub Actions             |
+| Area | Technology |
+|---|---|
+| API Testing | Postman |
+| API Automation | Postman JavaScript |
+| CLI Regression | Newman |
+| API Type | REST |
+| Database | MySQL |
+| Database Client | MySQL Workbench |
+| Database Testing | SQL |
+| Version Control | Git / GitHub |
+| CI/CD | GitHub Actions |
+
+---
+
+## Project Architecture
+
+```text
+                    QA Test Project
+                         |
+           -----------------------------
+           |                           |
+           v                           v
+      API Testing                Database Testing
+           |                           |
+        Postman                       MySQL
+           |                           |
+   JavaScript Assertions        SQL Validation
+           |                           |
+   Dynamic Variables          Constraints / JOINs
+           |                           |
+        Newman                  Data Integrity
+           |
+   GitHub Actions CI
+```
 
 ---
 
@@ -51,6 +81,10 @@ The objective of this project is to demonstrate practical QA skills across API a
 ```text
 insurance-api-db-testing/
 │
+├── .github/
+│   └── workflows/
+│       └── api-tests.yml
+│
 ├── database/
 │   ├── schema.sql
 │   ├── test_data.sql
@@ -58,7 +92,14 @@ insurance-api-db-testing/
 │
 ├── docs/
 │   ├── architecture.md
-│   └── test-strategy.md
+│   ├── test-strategy.md
+│   └── screenshots/
+│       ├── postman-runner-23-tests-passed.png
+│       ├── newman-23-assertions-passed.png
+│       ├── postman-create-policy-201-passed.png
+│       ├── postman-duplicate-policy-409-passed.png
+│       ├── database-validation.png
+│       └── github-actions-api-ci-passed.png
 │
 ├── newman/
 │   └── reports/
@@ -72,40 +113,81 @@ insurance-api-db-testing/
 │   ├── api-test-cases.md
 │   └── db-test-cases.md
 │
-├── .github/
-│   └── workflows/
-│       └── api-tests.yml
-│
 ├── .gitignore
 └── README.md
 ```
 
 ---
 
-# Module 1 – Motor Insurance API Testing
+# Module 1 — Motor Insurance API Testing
 
-API testing is performed against the **CyberNotes Motor Insurance Demo API** using Postman.
+API testing is performed using Postman against the CyberNotes Motor Insurance Demo API.
 
-## API Coverage
+## API Workflow
 
-The API module demonstrates:
+```text
+Generate Demo Credentials
+        ↓
+Extract Client ID / Secret
+        ↓
+Generate Access Token
+        ↓
+Create Motor Policy
+        ↓
+Store Policy ID
+        ↓
+Retrieve Policy
+        ↓
+Validate Business Fields
+```
 
-- Demo client credential generation
-- Authentication and access-token handling
-- Motor insurance policy operations
-- Policy retrieval
-- Dynamic environment variables
-- Request chaining
-- Positive testing
-- Negative testing
-- HTTP status-code validation
-- Response-body validation
-- Response-time validation
-- Newman regression execution
+The collection also contains negative scenarios for authorization and duplicate-policy handling.
 
 ---
 
-## Dynamic Data Handling
+## API Requests Covered
+
+The current collection contains **6 requests**:
+
+```text
+01 - Authentication
+
+POST  Get Demo Credentials
+POST  Get Access Token
+
+02 - Policies
+
+POST  Create Motor Policy
+POST  Create Duplicate Policy - Negative
+GET   Get Policy by ID
+GET   Get Policy - Missing Token - Negative
+```
+
+---
+
+## Current API Execution Status
+
+The current regression execution completes successfully with:
+
+```text
+Requests:       6
+Assertions:    23
+Failed:         0
+Errors:         0
+```
+
+Coverage includes successful and negative HTTP responses such as:
+
+```text
+201 Created
+200 OK
+409 Conflict
+401 Unauthorized
+```
+
+---
+
+## Dynamic Request Chaining
 
 Runtime values are extracted from API responses and stored as Postman environment variables.
 
@@ -119,52 +201,132 @@ reg_number
 policy_id
 ```
 
-This allows subsequent requests to reuse dynamically generated values instead of relying on hardcoded runtime credentials or identifiers.
+This allows later requests to consume values generated by earlier API calls rather than relying on hardcoded runtime identifiers.
 
-Sensitive runtime credentials and tokens are not stored in the repository.
+Sensitive runtime tokens and credentials are not stored in the repository.
 
 ---
 
-## Example Postman Assertion
+## API Assertions
+
+Postman scripts validate technical and business behavior.
+
+Example:
 
 ```javascript
 pm.test("Status code is 201", function () {
-  pm.response.to.have.status(201);
+    pm.response.to.have.status(201);
 });
 
 pm.test("Response time is below 2000 ms", function () {
-  pm.expect(pm.response.responseTime).to.be.below(2000);
+    pm.expect(pm.response.responseTime).to.be.below(2000);
 });
 
-pm.test("Client credentials are returned", function () {
-  const jsonData = pm.response.json();
-
-  pm.expect(jsonData).to.have.property("client_id");
-  pm.expect(jsonData).to.have.property("client_secret");
+pm.test("Policy ID is generated", function () {
+    const jsonData = pm.response.json();
+    pm.expect(jsonData).to.have.property("id");
 });
+```
+
+Validation includes:
+
+- HTTP status codes
+- response time
+- authentication behavior
+- generated identifiers
+- registration number
+- policy status
+- expected response properties
+- rejection of invalid operations
+
+---
+
+## Positive API Testing
+
+Examples include:
+
+### Create Motor Policy
+
+Expected:
+
+```text
+HTTP 201 Created
+Policy ID generated
+Registration number validated
+Policy status = active
+Response time < 2000 ms
+```
+
+### Get Policy by ID
+
+Expected:
+
+```text
+HTTP 200 OK
+Correct Policy ID
+Correct registration number
+Correct policy status
+Response time < 2000 ms
 ```
 
 ---
 
-## Newman Execution
+## Negative API Testing
 
-The Postman collection can be executed from the command line using Newman:
+### Duplicate Policy
+
+The duplicate-policy request validates:
+
+```text
+HTTP 409 Conflict
+Duplicate request rejected
+No new policy ID generated
+Response time < 2000 ms
+```
+
+### Missing Authentication Token
+
+The unauthorized request validates:
+
+```text
+HTTP 401 Unauthorized
+Unauthorized request rejected
+Response time < 2000 ms
+```
+
+---
+
+# Newman CLI Execution
+
+The collection can be executed outside the Postman UI using Newman.
+
+From the repository root:
 
 ```bash
 newman run "postman/Motor Insurance API - Postman Automation.postman_collection.json" -e "postman/Insurance QA.postman_environment.json"
 ```
 
-A JSON execution report is stored under:
+Current Newman execution:
 
 ```text
-newman/reports/
+6 requests executed
+23 assertions executed
+0 failed
 ```
+
+This provides repeatable command-line regression execution suitable for CI/CD.
 
 ---
 
-# Module 2 – MySQL Database Testing
+# Module 2 — MySQL Database Testing
 
-A local relational database was created to model a simplified Motor Insurance data structure.
+A local MySQL database named:
+
+```text
+insurance_qa
+```
+
+models a simplified Motor Insurance domain.
 
 ## Data Model
 
@@ -180,62 +342,86 @@ Vehicle
 Policy
 ```
 
-The database contains three primary entities:
+The main entities are:
 
-- `customers`
-- `vehicles`
-- `policies`
+```text
+customers
+vehicles
+policies
+```
+
+---
+
+## Database Schema Concepts
+
+The schema demonstrates:
+
+- primary keys
+- foreign keys
+- UNIQUE constraints
+- NOT NULL constraints
+- CHECK constraints
+- relational associations
+- data-type validation
+
+Example relationship:
+
+```text
+customers.customer_id
+        ↓
+vehicles.customer_id
+        ↓
+policies.vehicle_id / customer_id
+```
 
 ---
 
 ## Database Testing Coverage
 
-Testing includes:
+SQL validation includes:
 
-- Primary-key validation
-- Foreign-key validation
+- positive inserts
+- negative inserts
+- primary-key validation
+- foreign-key validation
 - UNIQUE constraint validation
-- NOT NULL constraint validation
+- NOT NULL validation
 - CHECK constraint validation
-- Positive inserts
-- Negative inserts
-- INNER JOIN validation
-- LEFT JOIN validation
-- Referential-integrity checks
-- Orphan-record detection
-- Duplicate-data detection
-- Aggregate queries
-- Subqueries
-- Business-rule validation
+- INNER JOIN queries
+- LEFT JOIN queries
+- duplicate detection
+- orphan-record detection
+- aggregate queries
+- subqueries
+- referential-integrity validation
+- business-rule validation
 
 ---
 
 ## Negative Database Testing
 
-Several invalid database operations were intentionally executed to verify data integrity.
+The database suite validates that invalid records are rejected.
 
-| Scenario                                  | Expected Behaviour                 | Result     |
-| ----------------------------------------- | ---------------------------------- | ---------- |
-| Duplicate customer email                  | UNIQUE constraint rejects record   | Error 1062 |
-| NULL customer name                        | NOT NULL constraint rejects record | Error 1048 |
-| Vehicle referencing non-existing customer | Foreign key rejects record         | Error 1452 |
-| Policy with invalid date range            | CHECK constraint rejects record    | Error 3819 |
+| Scenario | Expected Result |
+|---|---|
+| Duplicate customer email | UNIQUE constraint rejects insert |
+| NULL customer name | NOT NULL constraint rejects insert |
+| Invalid customer reference | Foreign key rejects insert |
+| Invalid policy date range | CHECK constraint rejects insert |
+
+This demonstrates both data validation and database-level defect prevention.
 
 ---
 
 ## Business Rule Validation
 
-One business rule requires:
+One important policy rule is:
 
 ```text
 Policy End Date > Policy Start Date
 ```
 
-Testing was performed in multiple stages.
-
-An invalid policy was initially inserted with an end date earlier than its start date.
-
-A SQL validation query detected the problem:
+SQL validation:
 
 ```sql
 SELECT
@@ -249,21 +435,19 @@ SELECT
 FROM policies;
 ```
 
-A database CHECK constraint was subsequently introduced:
+The database schema also enforces the rule using:
 
 ```sql
 CHECK (end_date > start_date)
 ```
 
-The invalid insert was executed again and MySQL rejected it, demonstrating both **defect detection** and **database-level defect prevention**.
+This demonstrates validation at both QA-query and database-constraint levels.
 
 ---
 
-## Referential Integrity Testing
+## Referential Integrity Validation
 
-LEFT JOIN queries are used to identify orphan records.
-
-Example:
+An example LEFT JOIN check identifies orphan vehicle records:
 
 ```sql
 SELECT
@@ -276,13 +460,13 @@ LEFT JOIN customers c
 WHERE c.customer_id IS NULL;
 ```
 
-Zero returned records indicate that no orphan vehicles exist in the test dataset.
+Zero returned records indicate that no orphan vehicle records exist.
 
 ---
 
 ## Duplicate Detection
 
-Duplicate policy numbers can be identified using:
+Duplicate policy numbers can be checked using:
 
 ```sql
 SELECT
@@ -293,7 +477,7 @@ GROUP BY policy_number
 HAVING COUNT(*) > 1;
 ```
 
-This demonstrates the common SQL pattern:
+This demonstrates the common SQL validation pattern:
 
 ```text
 GROUP BY + HAVING COUNT(*) > 1
@@ -301,118 +485,181 @@ GROUP BY + HAVING COUNT(*) > 1
 
 ---
 
-# Test Strategy
-
-The project uses a combination of:
-
-**Positive Testing**  
-Valid API requests and database records verify expected behaviour.
-
-**Negative Testing**  
-Invalid inputs and operations verify error handling and database protection.
-
-**Data Integrity Testing**  
-SQL queries and constraints verify relationships and business rules.
-
-**Automation / Regression Testing**  
-Postman assertions and Newman provide repeatable API execution.
-
-The complete strategy is available in:
-
-```text
-docs/test-strategy.md
-```
-
----
-
-# Test Cases
-
-Documented test scenarios are available under:
-
-```text
-test-cases/
-├── api-test-cases.md
-└── db-test-cases.md
-```
-
-The test cases include positive, negative, authentication, data-integrity, constraint and business-rule scenarios.
-
----
-
 # Running the Database Tests
 
-## 1. Create the database schema
+### 1. Create the schema
 
-Run:
+Execute:
 
 ```text
 database/schema.sql
 ```
 
-## 2. Insert valid test data
+### 2. Insert test data
 
-Run:
+Execute:
 
 ```text
 database/test_data.sql
 ```
 
-## 3. Execute validation queries
+### 3. Run the validation suite
 
-Run:
+Execute:
 
 ```text
 database/validation_queries.sql
 ```
 
+The SQL scripts can be executed using MySQL Workbench.
+
 ---
 
-# Running the API Tests
+# GitHub Actions CI/CD
 
-## Using Postman
+The API regression collection can also be executed through GitHub Actions.
 
-1. Import the collection from the `postman` directory.
-2. Import the QA environment.
-3. Select the environment.
-4. Execute the collection.
+The workflow is located at:
 
-Dynamic credentials and runtime values are generated during execution.
+```text
+.github/workflows/api-tests.yml
+```
 
-## Using Newman
+The CI pipeline performs:
 
-From the project root:
+```text
+Manual Workflow Trigger
+        ↓
+Ubuntu Runner
+        ↓
+Checkout Repository
+        ↓
+Setup Node.js
+        ↓
+Install Newman
+        ↓
+Execute Postman Collection
+        ↓
+23 API Assertions
+        ↓
+Pass / Fail Result
+```
 
-```bash
-newman run "postman/Motor Insurance API - Postman Automation.postman_collection.json" -e "postman/Insurance QA.postman_environment.json"
+The workflow can be triggered manually from:
+
+```text
+GitHub
+→ Actions
+→ Insurance API Tests
+→ Run workflow
+```
+
+---
+
+# Execution Evidence
+
+## Postman Collection Runner
+
+The complete collection executes successfully with **23/23 assertions passing**.
+
+![Postman Runner](docs/screenshots/postman-runner-23-tests-passed.png)
+
+---
+
+## Newman CLI Execution
+
+Newman executes all six API requests with **23 assertions and zero failures**.
+
+![Newman Execution](docs/screenshots/newman-23-assertions-passed.png)
+
+---
+
+## Database Validation
+
+MySQL validation demonstrates relational data checks and insurance business-rule validation.
+
+![Database Validation](docs/screenshots/database-validation.png)
+
+---
+
+## GitHub Actions CI
+
+The Postman/Newman API regression suite can be executed through GitHub Actions.
+
+![GitHub Actions CI](docs/screenshots/github-actions-api-ci-passed.png)
+
+---
+
+# Additional API Evidence
+
+The repository also contains execution evidence for:
+
+```text
+201 Created      — successful policy creation
+409 Conflict     — duplicate-policy rejection
+401 Unauthorized — missing-token negative validation
+```
+
+---
+
+# Test Strategy
+
+The project applies multiple QA techniques:
+
+```text
+Positive Testing
+        +
+Negative Testing
+        +
+Authentication Testing
+        +
+API Regression
+        +
+Database Validation
+        +
+Constraint Testing
+        +
+Data Integrity Testing
+```
+
+Detailed strategy documentation is maintained under:
+
+```text
+docs/test-strategy.md
+```
+
+Test scenarios are documented under:
+
+```text
+test-cases/
 ```
 
 ---
 
 # Key QA Skills Demonstrated
 
-This project demonstrates practical experience with:
-
 - REST API testing
 - Postman
+- JavaScript assertions
+- dynamic request chaining
 - API authentication
-- JavaScript API assertions
-- Dynamic request chaining
-- Environment variables
-- Positive and negative testing
+- environment variables
+- positive testing
+- negative testing
+- HTTP status-code validation
+- response-time validation
 - Newman CLI
 - MySQL
 - SQL
-- Relational database concepts
-- PK/FK constraints
-- Database integrity testing
 - JOINs
-- Subqueries
-- Aggregate functions
-- Duplicate detection
-- Business-rule validation
-- Test-case design
-- Test strategy
-- Git & GitHub
+- primary and foreign keys
+- database constraints
+- duplicate detection
+- referential integrity
+- business-rule validation
+- test-case design
+- Git / GitHub
+- GitHub Actions CI/CD
 
 ---
 
@@ -420,16 +667,18 @@ This project demonstrates practical experience with:
 
 This is a QA portfolio project using demo/test systems and synthetic data.
 
-The CyberNotes Motor Insurance API and the local MySQL database are **independent testing modules**.
+The CyberNotes API and local MySQL database are **independent testing modules**.
 
-Therefore, this project does not represent:
+The project therefore does not claim:
 
-- API-to-database integration testing
-- Production insurance data
-- Full performance/load testing
-- Production security testing
+```text
+API-to-database integration testing
+Production insurance data validation
+Full performance/load testing
+Security penetration testing
+```
 
-Basic API response-time and authentication validations are included, but they should not be interpreted as dedicated performance or penetration testing.
+Response-time and authentication checks are included as functional API validations and should not be interpreted as dedicated performance or security testing.
 
 ---
 
